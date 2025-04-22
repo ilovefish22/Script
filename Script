@@ -1,0 +1,129 @@
+local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
+
+local Window = Rayfield:CreateWindow({
+    Name = "Pingxxhub",
+    LoadingTitle = "Dollarpingxx",
+    LoadingSubtitle = "Dont beat yo shit tonight",
+    ConfigurationSaving = {
+        Enabled = true,
+        FolderName = "Pingxxhub",
+        FileName = "PingxxSettings"
+    },
+    KeySystem = true,
+    KeySettings = {
+        Title = "dollarshub",
+        Subtitle = "Key System",
+        Note = "Get the key from: https://pastebin.com/raw/v8YWfgAA",
+        FileName = "dollarpingxx",
+        SaveKey = false,
+        GrabKeyFromSite = true,
+        Key = {"https://pastebin.com/raw/v8YWfgAA"}
+    }
+})
+
+Rayfield:Notify({
+    Title = "I will know if you beat",
+    Content = "Be the best",
+    Duration = 5,
+    Image = 4483362458,
+})
+
+local Tab = Window:CreateTab("Main", 4483362458)
+
+Tab:CreateButton({
+    Name = "Noclip",
+    Callback = function()
+        local lp = game.Players.LocalPlayer
+        local char = lp.Character
+        if not char then return end
+        _G.Noclip = not _G.Noclip
+        if _G.Noclip then
+            game:GetService("RunService").Stepped:Connect(function()
+                if char and char:FindFirstChild("HumanoidRootPart") then
+                    char.HumanoidRootPart.CanCollide = false
+                    for _, part in ipairs(char:GetChildren()) do
+                        if part:IsA("BasePart") then
+                            part.CanCollide = false
+                        end
+                    end
+                end
+            end)
+        else
+            for _, part in ipairs(char:GetChildren()) do
+                if part:IsA("BasePart") then
+                    part.CanCollide = true
+                end
+            end
+        end
+    end,
+})
+
+Tab:CreateButton({
+    Name = "Infinite Yield",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source"))()
+    end,
+})
+
+local isFullbright = false
+Tab:CreateButton({
+    Name = "Fullbright",
+    Callback = function()
+        isFullbright = not isFullbright
+        if isFullbright then
+            game.Lighting.Brightness = 2
+            game.Lighting.GlobalShadows = false
+            game.Lighting.OutdoorAmbient = Color3.fromRGB(255, 255, 255)
+            game.Lighting.Ambient = Color3.fromRGB(255, 255, 255)
+        else
+            game.Lighting.Brightness = 1
+            game.Lighting.GlobalShadows = true
+            game.Lighting.OutdoorAmbient = Color3.fromRGB(128, 128, 128)
+            game.Lighting.Ambient = Color3.fromRGB(128, 128, 128)
+        end
+    end,
+})
+
+Tab:CreateButton({
+    Name = "Uniform Hitbox (Same Size for All Players)",
+    Callback = function()
+        local standardSize = Vector3.new(2, 6, 2)
+        for _, player in ipairs(game.Players:GetPlayers()) do
+            if player ~= game.Players.LocalPlayer and player.Character then
+                for _, part in ipairs(player.Character:GetChildren()) do
+                    if part:IsA("BasePart") then
+                        part.Size = standardSize
+                    end
+                end
+            end
+        end
+    end,
+})
+
+Tab:CreateButton({
+    Name = "Kill Aura",
+    Callback = function()
+        local lp = game.Players.LocalPlayer
+        local char = lp.Character
+        if not char then return end
+        local damageRadius = 15
+        local damageAmount = 50
+        game:GetService("RunService").Heartbeat:Connect(function()
+            if char and char:FindFirstChild("HumanoidRootPart") then
+                for _, player in ipairs(game.Players:GetPlayers()) do
+                    if player ~= lp and player.Character then
+                        local targetChar = player.Character
+                        local targetHumanoid = targetChar:FindFirstChild("Humanoid")
+                        local targetHRP = targetChar:FindFirstChild("HumanoidRootPart")
+                        if targetHRP and targetHumanoid and (targetHRP.Position - char.HumanoidRootPart.Position).Magnitude <= damageRadius then
+                            targetHumanoid:TakeDamage(damageAmount)
+                        end
+                    end
+                end
+            end
+        end)
+    end,
+})
+
+Window:CreateTab("Troll", 4483362458)
+Window:CreateTab("Misc", 4483362458)
