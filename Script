@@ -231,5 +231,25 @@ TrollTab:CreateButton({
     end,
 })
 
--- Misc Tab
+-- Farm Tab
+local FarmTab = Window:CreateTab("Farm", 4483362458)
+
+-- Railgun Button
+FarmTab:CreateButton({
+    Name = "Railgun",
+    Callback = function()
+        print("Activating Railgun...")
+        while wait() do
+            game:GetService("ReplicatedStorage").RemoteEvent:FireServer(16, "railgun")
+            wait()
+            for i, v in pairs(game.Players:GetPlayers()) do
+                if v.Name ~= game.Players.LocalPlayer.Name then
+                    game:GetService("ReplicatedStorage").RemoteEvent:FireServer(30, v)
+                end
+            end
+        end
+    end,
+})
+
+-- Misc Tab (Empty)
 Window:CreateTab("Misc", 4483362458)
