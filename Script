@@ -11,13 +11,13 @@ local Window = Rayfield:CreateWindow({
     },
     KeySystem = true,
     KeySettings = {
-        Title = "dollarshub",
-        Subtitle = "Key System",
-        Note = "Get the key from: https://pastebin.com/raw/v8YWfgAA",
-        FileName = "dollarpingxx",
-        SaveKey = false,
+        Title = "Pingxxhub Key System",
+        Subtitle = "Watch an ad to get the key",
+        Note = "Get your key at: https://loot.link/pingxxkey", -- Replace with your real LootLabs link
+        FileName = "PingxxhubKey",
+        SaveKey = true,
         GrabKeyFromSite = true,
-        Key = {"https://pastebin.com/raw/v8YWfgAA"}
+        Key = {"v8YWfgAA"} -- Pastebin key ID
     }
 })
 
@@ -30,6 +30,7 @@ Rayfield:Notify({
 
 local Tab = Window:CreateTab("Main", 4483362458)
 
+-- Noclip Button
 Tab:CreateButton({
     Name = "Noclip",
     Callback = function()
@@ -58,6 +59,7 @@ Tab:CreateButton({
     end,
 })
 
+-- Infinite Yield Button
 Tab:CreateButton({
     Name = "Infinite Yield",
     Callback = function()
@@ -65,6 +67,7 @@ Tab:CreateButton({
     end,
 })
 
+-- Fullbright Button
 local isFullbright = false
 Tab:CreateButton({
     Name = "Fullbright",
@@ -84,6 +87,7 @@ Tab:CreateButton({
     end,
 })
 
+-- Uniform Hitbox
 Tab:CreateButton({
     Name = "Uniform Hitbox (Same Size for All Players)",
     Callback = function()
@@ -100,6 +104,7 @@ Tab:CreateButton({
     end,
 })
 
+-- Kill Aura
 Tab:CreateButton({
     Name = "Kill Aura",
     Callback = function()
@@ -125,5 +130,8 @@ Tab:CreateButton({
     end,
 })
 
+-- Troll Tab (Empty)
 Window:CreateTab("Troll", 4483362458)
+
+-- Misc Tab (Empty)
 Window:CreateTab("Misc", 4483362458)
