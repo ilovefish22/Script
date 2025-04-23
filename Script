@@ -59,7 +59,7 @@ Tab:CreateButton({
     end,
 })
 
--- Infinite Yield Button
+-- Infinite Yield
 Tab:CreateButton({
     Name = "Infinite Yield",
     Callback = function()
@@ -67,7 +67,7 @@ Tab:CreateButton({
     end,
 })
 
--- Fullbright Button
+-- Fullbright
 local isFullbright = false
 Tab:CreateButton({
     Name = "Fullbright",
@@ -130,31 +130,27 @@ Tab:CreateButton({
     end,
 })
 
--- Troll Tab with Explode and Explode 2 Buttons
+-- Troll Tab
 local TrollTab = Window:CreateTab("Troll", 4483362458)
 
--- Explode Button in Troll Tab
+-- Explode
 TrollTab:CreateButton({
     Name = "Explode",
     Callback = function()
         local lp = game.Players.LocalPlayer
         local char = lp.Character
         if not char then return end
-        
-        -- Create explosion effect at player's position
         local explosion = Instance.new("Explosion")
         explosion.Position = char.HumanoidRootPart.Position
         explosion.BlastRadius = 10
         explosion.BlastPressure = 1000
         explosion.ExplosionType = Enum.ExplosionType.NoCraters
         explosion.Parent = workspace
-        
-        -- Optional: Destroy the player's character after explosion
         char:BreakJoints()
     end,
 })
 
--- Explode 2 Button to fling character (with Toggle functionality)
+-- Explode 2 (Fling)
 local isFlinging = false
 TrollTab:CreateButton({
     Name = "Explode 2 (Fling) - Toggle",
@@ -163,30 +159,77 @@ TrollTab:CreateButton({
         local char = lp.Character
         if not char then return end
 
-        isFlinging = not isFlinging  -- Toggle fling state
-        
+        isFlinging = not isFlinging
         if isFlinging then
-            -- Apply force to fling the player's character continuously
             local bodyVelocity = Instance.new("BodyVelocity")
-            bodyVelocity.MaxForce = Vector3.new(100000, 100000, 100000)  -- High force for fling
-            bodyVelocity.Velocity = Vector3.new(math.random(-500, 500), math.random(500, 1000), math.random(-500, 500))  -- Random fling direction
-            bodyVelocity.Parent = char:FindFirstChild("HumanoidRootPart")  -- Apply to HumanoidRootPart
+            bodyVelocity.MaxForce = Vector3.new(100000, 100000, 100000)
+            bodyVelocity.Velocity = Vector3.new(math.random(-500, 500), math.random(500, 1000), math.random(-500, 500))
+            bodyVelocity.Parent = char:FindFirstChild("HumanoidRootPart")
 
-            -- Loop the fling by continually applying the force
-            local flingLoop = game:GetService("RunService").Heartbeat:Connect(function()
+            local flingLoop
+            flingLoop = game:GetService("RunService").Heartbeat:Connect(function()
                 if isFlinging then
                     bodyVelocity.Velocity = Vector3.new(math.random(-500, 500), math.random(500, 1000), math.random(-500, 500))
                 else
-                    bodyVelocity:Destroy()  -- Remove the BodyVelocity when toggled off
-                    flingLoop:Disconnect()  -- Stop the loop
+                    bodyVelocity:Destroy()
+                    flingLoop:Disconnect()
                 end
             end)
-        else
-            -- Stop flinging and clean up
-            isFlinging = false
         end
     end,
 })
 
--- Misc Tab (Empty)
+-- Lag Simulate (Tool Toggle)
+TrollTab:CreateButton({
+    Name = "Lag Simulate (Tool Toggle)",
+    Callback = function()
+        local player = game.Players.LocalPlayer
+        local backpack = player:WaitForChild("Backpack")
+
+        local tool = Instance.new("Tool")
+        tool.RequiresHandle = false
+        tool.Name = "Lag Device"
+        tool.Parent = backpack
+
+        local isLagging = false
+        local freezeTime = 2
+
+        tool.Activated:Connect(function()
+            if isLagging then return end
+            isLagging = true
+
+            local char = player.Character or player.CharacterAdded:Wait()
+            local hrp = char:FindFirstChild("HumanoidRootPart")
+            if not hrp then return end
+
+            local originalCFrame = hrp.CFrame
+            hrp.Anchored = true
+
+            game.StarterGui:SetCore("ChatMakeSystemMessage", {
+                Text = "[Pingxxhub] Lag Activated...",
+                Color = Color3.fromRGB(255, 100, 100)
+            })
+
+            task.wait(freezeTime)
+
+            hrp.CFrame = originalCFrame * CFrame.new(0, 0, -10)
+            hrp.Anchored = false
+
+            game.StarterGui:SetCore("ChatMakeSystemMessage", {
+                Text = "[Pingxxhub] Lag Recovered.",
+                Color = Color3.fromRGB(100, 255, 100)
+            })
+
+            isLagging = false
+        end)
+
+        Rayfield:Notify({
+            Title = "Lag Device",
+            Content = "Equipped in your backpack!",
+            Duration = 5
+        })
+    end,
+})
+
+-- Misc Tab
 Window:CreateTab("Misc", 4483362458)
