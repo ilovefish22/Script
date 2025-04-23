@@ -11,13 +11,13 @@ local Window = Rayfield:CreateWindow({
     },
     KeySystem = true,
     KeySettings = {
-        Title = "Pingxxhub Key System",
-        Subtitle = "Watch an ad to get the key",
-        Note = "Get your key at: https://loot.link/pingxxkey", -- Replace with your real LootLabs link
-        FileName = "PingxxhubKey",
-        SaveKey = true,
+        Title = "dollarshub",
+        Subtitle = "Key System",
+        Note = "Get the key from: https://lootdest.org/s?Pem9vPok",
+        FileName = "dollarpingxx",
+        SaveKey = false,
         GrabKeyFromSite = true,
-        Key = {"v8YWfgAA"} -- Pastebin key ID
+        Key = {"https://pastebin.com/raw/v8YWfgAA"}
     }
 })
 
