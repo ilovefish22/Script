@@ -130,8 +130,63 @@ Tab:CreateButton({
     end,
 })
 
--- Troll Tab (Empty)
-Window:CreateTab("Troll", 4483362458)
+-- Troll Tab with Explode and Explode 2 Buttons
+local TrollTab = Window:CreateTab("Troll", 4483362458)
+
+-- Explode Button in Troll Tab
+TrollTab:CreateButton({
+    Name = "Explode",
+    Callback = function()
+        local lp = game.Players.LocalPlayer
+        local char = lp.Character
+        if not char then return end
+        
+        -- Create explosion effect at player's position
+        local explosion = Instance.new("Explosion")
+        explosion.Position = char.HumanoidRootPart.Position
+        explosion.BlastRadius = 10
+        explosion.BlastPressure = 1000
+        explosion.ExplosionType = Enum.ExplosionType.NoCraters
+        explosion.Parent = workspace
+        
+        -- Optional: Destroy the player's character after explosion
+        char:BreakJoints()
+    end,
+})
+
+-- Explode 2 Button to fling character (with Toggle functionality)
+local isFlinging = false
+TrollTab:CreateButton({
+    Name = "Explode 2 (Fling) - Toggle",
+    Callback = function()
+        local lp = game.Players.LocalPlayer
+        local char = lp.Character
+        if not char then return end
+
+        isFlinging = not isFlinging  -- Toggle fling state
+        
+        if isFlinging then
+            -- Apply force to fling the player's character continuously
+            local bodyVelocity = Instance.new("BodyVelocity")
+            bodyVelocity.MaxForce = Vector3.new(100000, 100000, 100000)  -- High force for fling
+            bodyVelocity.Velocity = Vector3.new(math.random(-500, 500), math.random(500, 1000), math.random(-500, 500))  -- Random fling direction
+            bodyVelocity.Parent = char:FindFirstChild("HumanoidRootPart")  -- Apply to HumanoidRootPart
+
+            -- Loop the fling by continually applying the force
+            local flingLoop = game:GetService("RunService").Heartbeat:Connect(function()
+                if isFlinging then
+                    bodyVelocity.Velocity = Vector3.new(math.random(-500, 500), math.random(500, 1000), math.random(-500, 500))
+                else
+                    bodyVelocity:Destroy()  -- Remove the BodyVelocity when toggled off
+                    flingLoop:Disconnect()  -- Stop the loop
+                end
+            end)
+        else
+            -- Stop flinging and clean up
+            isFlinging = false
+        end
+    end,
+})
 
 -- Misc Tab (Empty)
 Window:CreateTab("Misc", 4483362458)
