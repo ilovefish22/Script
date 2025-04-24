@@ -293,5 +293,23 @@ FarmTab:CreateButton({
     end,
 })
 
+-- Kill Aura / Ban Hit Button
+FarmTab:CreateButton({
+    Name = "Kill Aura / Ban Hit",
+    Callback = function()
+        -- Safely load and execute the Kill Aura script
+        local success, err = pcall(function()
+            loadstring(game:HttpGet('https://raw.githubusercontent.com/shimesuto/SymestsBPthingy/refs/heads/main/thekillaura.lua'))()
+        end)
+
+        -- Handle any errors that occur during loading
+        if not success then
+            print("Error loading Kill Aura script: " .. err)
+        else
+            print("Kill Aura script loaded successfully!")
+        end
+    end,
+})
+
 -- Misc Tab (Empty)
 Window:CreateTab("Misc", 4483362458)
