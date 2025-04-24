@@ -312,4 +312,32 @@ FarmTab:CreateButton({
 })
 
 -- Misc Tab (Empty)
-Window:CreateTab("Misc", 4483362458)
+local MiscTab = Window:CreateTab("Misc", 4483362458)
+
+-- Random Teleport Button
+MiscTab:CreateButton({
+    Name = "Random Teleport",
+    Callback = function()
+        local lp = game.Players.LocalPlayer
+        local char = lp.Character
+        if not char then return end
+
+        -- Define random position range
+        local xPos = math.random(-1000, 1000)
+        local yPos = math.random(10, 100)
+        local zPos = math.random(-1000, 1000)
+
+        -- Set the random position
+        local randomPos = Vector3.new(xPos, yPos, zPos)
+
+        -- Teleport the player
+        char:SetPrimaryPartCFrame(CFrame.new(randomPos))
+
+        -- Notify the player
+        Rayfield:Notify({
+            Title = "Random Teleport",
+            Content = "You have been teleported to a random location!",
+            Duration = 5
+        })
+    end,
+})
