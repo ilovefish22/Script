@@ -221,6 +221,26 @@ TrollTab:CreateButton({
     end,
 })
 
+-- Adding the Ragdoll button to the Troll tab
+TrollTab:CreateButton({
+    Name = "Ragdoll Mode",
+    Callback = function()
+        local char = game.Players.LocalPlayer.Character
+        if not char then return end
+        for _, v in pairs(char:GetDescendants()) do
+            if v:IsA("Motor6D") then
+                local socket = Instance.new("BallSocketConstraint")
+                local a1 = Instance.new("Attachment", v.Part0)
+                local a2 = Instance.new("Attachment", v.Part1)
+                socket.Attachment0 = a1
+                socket.Attachment1 = a2
+                socket.Parent = v.Part0
+                v:Destroy()
+            end
+        end
+    end,
+})
+
 local FarmTab = Window:CreateTab("Farm", 4483362458)
 
 FarmTab:CreateButton({
