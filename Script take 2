@@ -22,8 +22,8 @@ local Window = Rayfield:CreateWindow({
 })
 
 Rayfield:Notify({
-    Title = "I will know if you beat",
-    Content = "Be the best",
+    Title = "Fbfb incorporated",
+    Content = "Let us do all the work for you 🔗",
     Duration = 5,
     Image = 4483362458,
 })
