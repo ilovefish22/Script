@@ -23,7 +23,7 @@ local Window = Rayfield:CreateWindow({
 
 Rayfield:Notify({
     Title = "Fbfb incorporated",
-    Content = "Let us do all the work for you 🔗",
+    Content = "Let me do it for you:)",
     Duration = 5,
     Image = 4483362458,
 })
